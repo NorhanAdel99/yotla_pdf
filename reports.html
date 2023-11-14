@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/flatpickr.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .box {
+            border: 1px solid #d9d9d9;
+            border-radius: 10px;
+        }
+
+        .downloadIcon {
+            background-color: #dcdada;
+            padding: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 3px;
+            color: #91379e;
+
+        }
+
+        #inputText1,
+        #inputText2 {
+            border-color: transparent;
+            /* background-color: transparent; */
+            border-radius: 5px;
+        }
+
+        #inputText1:focus-visible,
+        #inputText2:focus-visible {
+            outline: 1px solid #91379e;
+            border-radius: 2px;
+        }
+
+        .box .underline:not(:last-child) {
+            border-bottom: 1px solid #d9d9d9 !important
+        }
+
+
+
+        .py-5 {
+            padding: 5px 0;
+        }
+
+        .p-20 {
+            padding: 20px
+        }
+
+        .userImg {
+            width: 100px;
+            height: 100px;
+        }
+
+        .destinguished-box {
+            background-color: #f5ecf6;
+            padding: 9px 12px;
+            border-radius: 5px;
+            color: #91379e
+        }
+    </style>
+
+
+
+
+</head>
+
+<div class="s-space">
+    <div class="container">
+        <div class="text-center">
+            <img src="img/person.png" alt="" class="userImg rounded-circle  mb-3">
+            <h6 class="mb-3"> عاصم عبدالله احمد محمد </h6>
+        </div>
+        <div class="box p-3">
+            <div class="flex-between mb-3">
+                <div class="d-flex gap-5 align-items-center">
+                    <i class="fa-solid fa-circle-xmark f-20 text-danger"></i>
+                    <h6>تقارير الحضور </h6>
+                </div>
+                <div class="downloadIcon flex-center" id="downloadPdf" onclick="createPDF()">
+                    <i class="fa-solid fa-download"></i>
+                </div>
+            </div>
+            <div class="box p-3 " id="target">
+                <h6 class="main-color mb-2"> الحضور والغياب </h6>
+                <div class="flex-center">
+                    <div class="contain-date m-end-20 p-1"><label class="destinguished-box mb-0 wh-color"
+                            for="inputText1">من </label><input type="text" id="inputText1" placeholder="2023-01-01">
+                    </div>
+                    <div class="contain-date"><label class="destinguished-box mb-0 wh-color" for="inputText2">الي
+                        </label><input type="text" id="inputText2" placeholder="2023-02-02"></div>
+                </div>
+                <div>
+                    <div class="flex-between underline py-2">
+                        <h6 class="text-muted">14/11/2023</h6>
+                        <h6><span>حاضر</span><span>/</span><span>ة</span></h6>
+                    </div>
+                    <div class="flex-between underline py-2">
+                        <h6 class="text-muted">14/11/2023</h6>
+                        <h6><span>حاضر</span><span>/</span><span>ة</span></h6>
+                    </div>
+                    <div class="flex-between underline py-2">
+                        <h6 class="text-muted">14/11/2023</h6>
+                        <h6><span> غائب</span><span>/</span><span>ة</span><span> باذن</span></h6>
+                    </div>
+                    <div class="flex-between underline py-2">
+                        <h6 class="text-muted">14/11/2023</h6>
+                        <h6>حاضر / ة</h6>
+                    </div>
+                    <div class="flex-between underline py-2">
+                        <h6 class="text-muted">14/11/2023</h6>
+                        <h6><span> غائب</span><span>/</span><span>ة</span><span> بدون اذن</span></h6>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+</body>
+
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/flatpicker.min.js"></script>
+
+<!-- pdf-files -->
+<script src="js/html2pdf.bundle.js"></script>
+<script src="js/bundle.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#reportCustomDisplay").html('Nothing Selected');
+        $("#inputText2").prop('disabled', true);
+        $("#inputText1").flatpickr({
+            minDate: "2023-01-20",
+            maxDate: "2023-07-08",
+            dateFormat: "Y-m-d",
+            defaultDate: ["2023-10-20", "2023-11-04"],
+            onChange: function (selectedDates, dateStr, instance) {
+                $("#inputText2").prop('disabled', false);
+                $("#inputText2").flatpickr({
+                    minDate: dateStr,
+                    maxDate: "2023-04-04",
+                    dateFormat: "Y-m-d",
+                });
+            }
+        });
+    });
+</script>
+<script>
+    function createPDF() {
+        var element = document.getElementById('target');
+        html2pdf(element, {
+            margin: 1,
+            padding: 0,
+            filename: 'report.pdf',
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { scale: 2, logging: true },
+            jsPDF: { unit: 'in', format: 'A2', orientation: 'P' },
+            class: createPDF
+        });
+    };
+
+</script>
+
+</html>
